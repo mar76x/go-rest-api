@@ -10,8 +10,8 @@ WHERE id = $1;
 
 -- name: CreateBranch :one
 INSERT INTO branch
-(id, company_id, name, description)
-VALUES ($1, $2, $3, $4) RETURNING *;
+(company_id, name, description)
+VALUES ($1, $2, $3) RETURNING *;
 
 -- name: UpdateBranch :exec
 UPDATE branch

@@ -10,8 +10,8 @@ WHERE id = $1;
 
 -- name: CreateArea :one
 INSERT INTO area
-(id, name, description)
-VALUES ($1, $2, $3) RETURNING *;
+(name, description)
+VALUES ($1, $2) RETURNING *;
 
 -- name: UpdateArea :exec
 UPDATE area

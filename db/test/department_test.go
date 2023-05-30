@@ -11,14 +11,12 @@ import (
 
 func createRandomDepartment(t *testing.T) db.Department {
 	arg := db.CreateDepartmentParams{
-		ID:          util.RandomNumber(),
 		Name:        util.RandomName(),
 		Description: util.RandomName(),
 	}
 	department, err := testQueries.CreateDepartment(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, department)
-	require.Equal(t, arg.ID, department.ID)
 	require.Equal(t, arg.Name, department.Name)
 	require.Equal(t, arg.Description, department.Description)
 	require.NotZero(t, department.ID)

@@ -11,14 +11,12 @@ import (
 
 func createRandomCompany(t *testing.T) db.Company {
 	arg := db.CreateCompanyParams{
-		ID:          util.RandomNumber(),
 		Name:        util.RandomName(),
 		Description: util.RandomName(),
 	}
 	company, err := testQueries.CreateCompany(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, company)
-	require.Equal(t, arg.ID, company.ID)
 	require.Equal(t, arg.Name, company.Name)
 	require.Equal(t, arg.Description, company.Description)
 	require.NotZero(t, company.ID)

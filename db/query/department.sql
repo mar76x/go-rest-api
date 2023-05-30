@@ -10,8 +10,8 @@ WHERE id = $1;
 
 -- name: CreateDepartment :one
 INSERT INTO department 
-(id, name, description)
-VALUES ($1, $2, $3) RETURNING *;
+(name, description)
+VALUES ($1, $2) RETURNING *;
 
 -- name: UpdateDepartment :exec
 UPDATE department

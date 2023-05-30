@@ -22,10 +22,12 @@ migrate-down:
 	docker run --rm -it -v ./db/migration:/migration --network host --env-file .env migrate/migrate -path /migration/ -database "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)?sslmode=$(SSL_MODE)" --verbose down
 
 sqlc:
-	docker run --rm -v $(pwd):/src -w /src kjconroy/sqlc generate
+	docker run --rm -v ./:/src -w /src kjconroy/sqlc generate
 
 postgresql:
-	docker run --rm -it --name postgres12 -p $(POSTGRES_PORT):$(POSTGRES_PORT) -e POSTGRES_USER=$(POSTGRES_USER) -e POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) -d postgres:15-alpine
+	docker run --rm -it --name postgres15 -p $(POSTGRES_PORT):$(POSTGRES_PORT) -e POSTGRES_USER=$(POSTGRES_USER) -e POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) -d postgres:15-alpine
 
+docker-stop:
+	docker stop $$(docker ps -q)
 
 .PHONY: build run test migrate migrate-down sqlc postgresql

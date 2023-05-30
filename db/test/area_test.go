@@ -11,14 +11,12 @@ import (
 
 func createRandomArea(t *testing.T) db.Area {
 	arg := db.CreateAreaParams{
-		ID:          util.RandomNumber(),
 		Name:        util.RandomName(),
 		Description: util.RandomName(),
 	}
 	area, err := testQueries.CreateArea(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, area)
-	require.Equal(t, arg.ID, area.ID)
 	require.Equal(t, arg.Name, area.Name)
 	require.Equal(t, arg.Description, area.Description)
 	require.NotZero(t, area.ID)

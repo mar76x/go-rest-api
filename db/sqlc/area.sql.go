@@ -11,18 +11,17 @@ import (
 
 const createArea = `-- name: CreateArea :one
 INSERT INTO area
-(id, name, description)
-VALUES ($1, $2, $3) RETURNING id, name, description, created_at, updated_at, deleted_at
+(name, description)
+VALUES ($1, $2) RETURNING id, name, description, created_at, updated_at, deleted_at
 `
 
 type CreateAreaParams struct {
-	ID          int64  `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }
 
 func (q *Queries) CreateArea(ctx context.Context, arg CreateAreaParams) (Area, error) {
-	row := q.db.QueryRow(ctx, createArea, arg.ID, arg.Name, arg.Description)
+	row := q.db.QueryRow(ctx, createArea, arg.Name, arg.Description)
 	var i Area
 	err := row.Scan(
 		&i.ID,

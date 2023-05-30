@@ -13,12 +13,11 @@ import (
 
 const createPaycheck = `-- name: CreatePaycheck :one
 INSERT INTO paycheck
-(id, type, filename, description, folder, path, read, signed, employee_id)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id, type, filename, description, folder, path, read, signed, employee_id, created_at, updated_at, deleted_at
+(type, filename, description, folder, path, read, signed, employee_id)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id, type, filename, description, folder, path, read, signed, employee_id, created_at, updated_at, deleted_at
 `
 
 type CreatePaycheckParams struct {
-	ID          int64     `json:"id"`
 	Type        string    `json:"type"`
 	Filename    string    `json:"filename"`
 	Description string    `json:"description"`
@@ -31,7 +30,6 @@ type CreatePaycheckParams struct {
 
 func (q *Queries) CreatePaycheck(ctx context.Context, arg CreatePaycheckParams) (Paycheck, error) {
 	row := q.db.QueryRow(ctx, createPaycheck,
-		arg.ID,
 		arg.Type,
 		arg.Filename,
 		arg.Description,

@@ -11,24 +11,18 @@ import (
 
 const createBranch = `-- name: CreateBranch :one
 INSERT INTO branch
-(id, company_id, name, description)
-VALUES ($1, $2, $3, $4) RETURNING id, company_id, name, description, created_at, updated_at, deleted_at
+(company_id, name, description)
+VALUES ($1, $2, $3) RETURNING id, company_id, name, description, created_at, updated_at, deleted_at
 `
 
 type CreateBranchParams struct {
-	ID          int64  `json:"id"`
 	CompanyID   int64  `json:"company_id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }
 
 func (q *Queries) CreateBranch(ctx context.Context, arg CreateBranchParams) (Branch, error) {
-	row := q.db.QueryRow(ctx, createBranch,
-		arg.ID,
-		arg.CompanyID,
-		arg.Name,
-		arg.Description,
-	)
+	row := q.db.QueryRow(ctx, createBranch, arg.CompanyID, arg.Name, arg.Description)
 	var i Branch
 	err := row.Scan(
 		&i.ID,

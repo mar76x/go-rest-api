@@ -11,18 +11,17 @@ import (
 
 const createRole = `-- name: CreateRole :one
 INSERT INTO role
-(id, name, description)
-VALUES ($1, $2, $3) RETURNING id, name, description, created_at, updated_at, deleted_at
+(name, description)
+VALUES ($1, $2) RETURNING id, name, description, created_at, updated_at, deleted_at
 `
 
 type CreateRoleParams struct {
-	ID          int64  `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }
 
 func (q *Queries) CreateRole(ctx context.Context, arg CreateRoleParams) (Role, error) {
-	row := q.db.QueryRow(ctx, createRole, arg.ID, arg.Name, arg.Description)
+	row := q.db.QueryRow(ctx, createRole, arg.Name, arg.Description)
 	var i Role
 	err := row.Scan(
 		&i.ID,

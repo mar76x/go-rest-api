@@ -17,7 +17,6 @@ func createRandomContract(t *testing.T) db.Contract {
 	role := createRandomRole(t)
 	employee := createRandomEmployee(t)
 	arg := db.CreateContractParams{
-		ID:           util.RandomNumber(),
 		Type:         util.RandomName(),
 		StartDate:    util.RandomString(10),
 		EmployeeID:   employee.ID,
@@ -30,7 +29,6 @@ func createRandomContract(t *testing.T) db.Contract {
 	contract, err := testQueries.CreateContract(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, contract)
-	require.Equal(t, arg.ID, contract.ID)
 	require.Equal(t, arg.Type, contract.Type)
 	require.Equal(t, arg.StartDate, contract.StartDate)
 	require.Equal(t, arg.EmployeeID, contract.EmployeeID)

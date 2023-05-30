@@ -12,7 +12,6 @@ import (
 func createRandomPaycheck(t *testing.T) db.Paycheck {
 	employee := createRandomEmployee(t)
 	arg := db.CreatePaycheckParams{
-		ID:          util.RandomNumber(),
 		Type:        util.RandomName(),
 		Filename:    util.RandomName(),
 		Description: util.RandomName(),
@@ -25,7 +24,6 @@ func createRandomPaycheck(t *testing.T) db.Paycheck {
 	paycheck, err := testQueries.CreatePaycheck(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, paycheck)
-	require.Equal(t, arg.ID, paycheck.ID)
 	require.Equal(t, arg.Type, paycheck.Type)
 	require.Equal(t, arg.Filename, paycheck.Filename)
 	require.Equal(t, arg.Description, paycheck.Description)

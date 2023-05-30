@@ -10,8 +10,8 @@ WHERE id = $1;
 
 -- name: CreateContract :one
 INSERT INTO contract
-(id, type, start_date, employee_id, company_id, branch_id, area_id, department_id, role_id)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;
+(type, start_date, employee_id, company_id, branch_id, area_id, department_id, role_id)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;
 
 -- name: UpdateContract :exec
 UPDATE contract

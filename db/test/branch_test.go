@@ -12,7 +12,6 @@ import (
 func createRandomBranch(t *testing.T) db.Branch {
 	company := createRandomCompany(t)
 	arg := db.CreateBranchParams{
-		ID:          util.RandomNumber(),
 		CompanyID:   company.ID,
 		Name:        util.RandomName(),
 		Description: util.RandomName(),
@@ -20,7 +19,6 @@ func createRandomBranch(t *testing.T) db.Branch {
 	branch, err := testQueries.CreateBranch(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, branch)
-	require.Equal(t, arg.ID, branch.ID)
 	require.Equal(t, arg.Name, branch.Name)
 	require.Equal(t, arg.Description, branch.Description)
 	require.NotZero(t, branch.ID)

@@ -10,8 +10,8 @@ WHERE id = $1;
 
 -- name: CreateRole :one
 INSERT INTO role
-(id, name, description)
-VALUES ($1, $2, $3) RETURNING *;
+(name, description)
+VALUES ($1, $2) RETURNING *;
 
 -- name: UpdateRole :exec
 UPDATE role

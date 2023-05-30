@@ -11,18 +11,17 @@ import (
 
 const createDepartment = `-- name: CreateDepartment :one
 INSERT INTO department 
-(id, name, description)
-VALUES ($1, $2, $3) RETURNING id, name, description, created_at, updated_at, deleted_at
+(name, description)
+VALUES ($1, $2) RETURNING id, name, description, created_at, updated_at, deleted_at
 `
 
 type CreateDepartmentParams struct {
-	ID          int64  `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }
 
 func (q *Queries) CreateDepartment(ctx context.Context, arg CreateDepartmentParams) (Department, error) {
-	row := q.db.QueryRow(ctx, createDepartment, arg.ID, arg.Name, arg.Description)
+	row := q.db.QueryRow(ctx, createDepartment, arg.Name, arg.Description)
 	var i Department
 	err := row.Scan(
 		&i.ID,

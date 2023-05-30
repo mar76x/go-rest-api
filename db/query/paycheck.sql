@@ -10,8 +10,8 @@ WHERE id = $1;
 
 -- name: CreatePaycheck :one
 INSERT INTO paycheck
-(id, type, filename, description, folder, path, read, signed, employee_id)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;
+(type, filename, description, folder, path, read, signed, employee_id)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;
 
 -- name: UpdatePaycheck :exec
 UPDATE paycheck

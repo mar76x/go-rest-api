@@ -11,18 +11,17 @@ import (
 
 const createCompany = `-- name: CreateCompany :one
 INSERT INTO company
-(id, name, description)
-VALUES ($1, $2, $3) RETURNING id, name, description, created_at, updated_at, deleted_at
+(name, description)
+VALUES ($1, $2) RETURNING id, name, description, created_at, updated_at, deleted_at
 `
 
 type CreateCompanyParams struct {
-	ID          int64  `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }
 
 func (q *Queries) CreateCompany(ctx context.Context, arg CreateCompanyParams) (Company, error) {
-	row := q.db.QueryRow(ctx, createCompany, arg.ID, arg.Name, arg.Description)
+	row := q.db.QueryRow(ctx, createCompany, arg.Name, arg.Description)
 	var i Company
 	err := row.Scan(
 		&i.ID,

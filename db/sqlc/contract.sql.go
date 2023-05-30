@@ -13,12 +13,11 @@ import (
 
 const createContract = `-- name: CreateContract :one
 INSERT INTO contract
-(id, type, start_date, employee_id, company_id, branch_id, area_id, department_id, role_id)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id, type, start_date, employee_id, company_id, branch_id, area_id, department_id, role_id, created_at, updated_at, deleted_at
+(type, start_date, employee_id, company_id, branch_id, area_id, department_id, role_id)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id, type, start_date, employee_id, company_id, branch_id, area_id, department_id, role_id, created_at, updated_at, deleted_at
 `
 
 type CreateContractParams struct {
-	ID           int64     `json:"id"`
 	Type         string    `json:"type"`
 	StartDate    string    `json:"start_date"`
 	EmployeeID   uuid.UUID `json:"employee_id"`
@@ -31,7 +30,6 @@ type CreateContractParams struct {
 
 func (q *Queries) CreateContract(ctx context.Context, arg CreateContractParams) (Contract, error) {
 	row := q.db.QueryRow(ctx, createContract,
-		arg.ID,
 		arg.Type,
 		arg.StartDate,
 		arg.EmployeeID,

@@ -10,8 +10,8 @@ WHERE id = $1;
 
 -- name: CreateCompany :one
 INSERT INTO company
-(id, name, description)
-VALUES ($1, $2, $3) RETURNING *;
+(name, description)
+VALUES ($1, $2) RETURNING *;
 
 -- name: UpdateCompany :exec
 UPDATE company
